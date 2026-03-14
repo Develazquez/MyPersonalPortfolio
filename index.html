@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Diego Velázquez — Ingeniero de Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:     #080c14;
+  --bg2:    #0d1321;
+  --accent: #38bdf8;
+  --accent2:#818cf8;
+  --accent3:#34d399;
+  --text:   #e2e8f0;
+  --muted:  #64748b;
+  --border: rgba(56,189,248,0.15);
+  --card:   rgba(13,19,33,0.8);
+  --glow:   0 0 40px rgba(56,189,248,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* grid bg */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+section,nav,footer{position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(8,12,20,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--accent);letter-spacing:.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:7rem 5% 4rem;position:relative}
+.hero-glow{position:absolute;top:20%;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(56,189,248,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-glow2{position:absolute;bottom:10%;left:5%;width:350px;height:350px;background:radial-gradient(circle,rgba(129,140,248,0.06) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-content{max-width:780px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);padding:.4rem 1rem;border-radius:100px;margin-bottom:1.8rem;animation:fadeDown .6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent3);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:.5rem;animation:fadeUp .7s ease .1s both}
+.hero-name span{color:var(--accent)}
+.hero-title{font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);margin-bottom:1.5rem;animation:fadeUp .7s ease .2s both}
+.hero-title span{color:var(--accent2)}
+.hero-desc{font-size:1.05rem;color:#94a3b8;max-width:560px;margin-bottom:2.5rem;animation:fadeUp .7s ease .3s both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s ease .4s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUTTONS */
+.btn{font-family:'JetBrains Mono',monospace;font-size:.82rem;padding:.75rem 1.8rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.04em;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary{background:var(--accent);color:#080c14;font-weight:600;box-shadow:0 0 20px rgba(56,189,248,0.3)}
+.btn-primary:hover{background:#7dd3fc;transform:translateY(-2px);box-shadow:0 0 32px rgba(56,189,248,0.5)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;animation:fadeUp 1s ease 1s both}
+.scroll-line{width:1px;height:50px;background:linear-gradient(var(--accent),transparent);animation:scrollAnim 2s ease infinite}
+@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
+
+/* SECTION COMMONS */
+section{padding:6rem 5%}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:1rem}
+.section-title span{color:var(--accent)}
+.section-sub{color:var(--muted);max-width:520px;margin-bottom:3.5rem;font-size:.97rem}
+.divider{width:60px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:3rem}
+
+/* STACK */
+#stack{background:var(--bg2)}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin-top:2.5rem}
+.tech-chip{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.4rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:all .25s;cursor:default}
+.tech-chip:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:var(--glow);background:rgba(56,189,248,0.05)}
+.tech-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.tech-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);text-align:center}
+
+/* ABOUT */
+#about{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden}
+.about-card::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.about-terminal{font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.8}
+.t-prompt{color:var(--accent3)}
+.t-cmd{color:var(--text)}
+.t-key{color:var(--accent2)}
+.t-val{color:var(--accent)}
+.t-str{color:#fbbf24}
+.t-blink{display:inline-block;width:8px;height:14px;background:var(--accent);animation:blink 1s step-end infinite;vertical-align:sub;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.soft-skills{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-pill{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.35rem .9rem;border-radius:100px;background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);color:var(--accent2)}
+
+/* PROJECTS */
+#projects{background:var(--bg2)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all .3s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:1rem}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.project-card:hover{transform:translateY(-5px);box-shadow:var(--glow);border-color:rgba(56,189,248,0.3)}
+.project-card:hover::before{transform:scaleX(1)}
+.project-number{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.1em}
+.project-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700}
+.project-role{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent3);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);display:inline-block;padding:.2rem .8rem;border-radius:100px}
+.project-desc{font-size:.9rem;color:#94a3b8;flex-grow:1}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.25rem .7rem;background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.15);border-radius:4px;color:var(--accent)}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;gap:1.5rem}
+.exp-item{display:grid;grid-template-columns:200px 1fr;gap:2rem;padding:2rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
+.exp-item:hover{border-color:rgba(56,189,248,0.3)}
+.exp-left{border-right:1px solid var(--border);padding-right:2rem}
+.exp-company{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.25rem}
+.exp-period{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted)}
+.exp-role{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent2);margin-bottom:.75rem;display:block}
+.exp-desc{font-size:.92rem;color:#94a3b8}
+
+/* SKILLS */
+#skills{background:var(--bg2)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.skill-category{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;transition:border-color .2s}
+.skill-category:hover{border-color:rgba(56,189,248,0.3)}
+.category-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+.category-name::before{content:'';width:20px;height:1px;background:var(--accent)}
+.skill-items{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-badge{font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:.3rem .8rem;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:var(--text);transition:all .2s}
+.skill-badge:hover{background:rgba(56,189,248,0.08);border-color:rgba(56,189,248,0.25);color:var(--accent)}
+
+/* BLOG */
+#blog{background:var(--bg)}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
+.blog-card:hover{transform:translateY(-5px);border-color:rgba(56,189,248,0.35);box-shadow:var(--glow)}
+.blog-cover{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+.blog-cover-01{background:linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%)}
+.blog-cover-02{background:linear-gradient(135deg,#0d1b2a 0%,#1b3a4b 50%,#0a3d62 100%)}
+.blog-cover-03{background:linear-gradient(135deg,#10131a 0%,#1a2233 50%,#0f3460 100%)}
+.blog-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,12,20,0.7),transparent)}
+.blog-cover-icon{position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(56,189,248,0.5))}
+.blog-meta-bar{display:flex;align-items:center;gap:.5rem;padding:1.2rem 1.6rem 0}
+.blog-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .7rem;border-radius:100px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);color:var(--accent)}
+.blog-read-time{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);margin-left:auto}
+.blog-body{padding:1rem 1.6rem 1.6rem;display:flex;flex-direction:column;gap:.7rem;flex-grow:1}
+.blog-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;line-height:1.3;color:var(--text)}
+.blog-excerpt{font-size:.88rem;color:#94a3b8;flex-grow:1}
+.blog-steps{margin-top:.5rem;display:flex;flex-direction:column;gap:.3rem}
+.blog-step{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);display:flex;align-items:flex-start;gap:.5rem}
+.blog-step::before{content:'›';color:var(--accent);flex-shrink:0}
+.blog-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.blog-author{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted)}
+.blog-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.3rem;transition:gap .2s}
+.blog-link:hover{gap:.6rem}
+
+/* CONTACT */
+#contact{background:var(--bg);text-align:center}
+.contact-wrapper{max-width:600px;margin:0 auto}
+.contact-links{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2.5rem}
+.contact-card{display:flex;align-items:center;gap:.8rem;padding:1rem 1.6rem;background:var(--card);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.8rem;transition:all .2s}
+.contact-card:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:var(--glow)}
+.contact-icon{font-size:1.1rem}
+
+/* FOOTER */
+footer{position:relative;z-index:1;padding:2rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted)}
+
+/* REVEAL ON SCROLL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #about{grid-template-columns:1fr;gap:2.5rem}
+  .exp-item{grid-template-columns:1fr}
+  .exp-left{border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:1rem}
+  .nav-links{display:none}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo">Develazquez</div>
+  <ul class="nav-links">
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#about">Sobre mi</a></li>
+    <li><a href="#projects">Projectos</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#blog">Tutoriales</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Disponible para oportunidades</div>
+    <h1 class="hero-name">Diego<br/><span>Velázquez.</span></h1>
+    <p class="hero-title">Ingeniero de Software &nbsp;/&nbsp; <span>Backend &amp; IoT Developer</span></p>
+    <p class="hero-desc">
+      Ingeniero de software especializado en desarrollo backend y APIs escalables.
+      Apasionado por construir soluciones eficientes con tecnologías modernas.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">Ver proyectos →</a>
+      <a href="#contact" class="btn btn-outline">Contactar</a>
+      <a href="https://drive.google.com/file/d/1A1ajJ0DUMpr1UskXlY5IP4ysRXUheySO/view?usp=sharing" class="btn btn-outline">Descargar CV</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ══ TECH STACK ══ -->
+<section id="stack">
+  <div class="section-label">// tech stack</div>
+  <h2 class="section-title">Tecnologías <span>principales</span></h2>
+  <p class="section-sub">Herramientas y lenguajes con los que construyo soluciones día a día.</p>
+  <div class="stack-grid">
+    <div class="tech-chip"><div class="tech-icon">🟨</div><div class="tech-name">JavaScript</div></div>
+    <div class="tech-chip"><div class="tech-icon">🐍</div><div class="tech-name">Python</div></div>
+    <div class="tech-chip"><div class="tech-icon">🐹</div><div class="tech-name">Go</div></div>
+    <div class="tech-chip"><div class="tech-icon">🔷</div><div class="tech-name">TypeScript</div></div>
+    <div class="tech-chip"><div class="tech-icon">🟢</div><div class="tech-name">Node.js</div></div>
+    <div class="tech-chip"><div class="tech-icon">⚡</div><div class="tech-name">Express.js</div></div>
+    <div class="tech-chip"><div class="tech-icon">⚛️</div><div class="tech-name">React</div></div>
+    <div class="tech-chip"><div class="tech-icon">🔴</div><div class="tech-name">Angular</div></div>
+    <div class="tech-chip"><div class="tech-icon">🐘</div><div class="tech-name">PostgreSQL</div></div>
+    <div class="tech-chip"><div class="tech-icon">🐬</div><div class="tech-name">MySQL</div></div>
+    <div class="tech-chip"><div class="tech-icon">🍃</div><div class="tech-name">MongoDB</div></div>
+    <div class="tech-chip"><div class="tech-icon">🔧</div><div class="tech-name">Git &amp; GitHub</div></div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div>
+    <div class="section-label">// sobre mí</div>
+    <h2 class="section-title">Quién<br/><span>soy.</span></h2>
+    <div class="divider"></div>
+    <p style="color:#94a3b8;margin-bottom:1.2rem">
+      Ingeniero de software con experiencia en desarrollo <strong style="color:var(--text)">backend</strong>,
+      <strong style="color:var(--text)">frontend</strong> y proyectos <strong style="color:var(--text)">IoT</strong>.
+      Actualmente cursando Ingeniería de Software en la
+      Universidad Politécnica de Chiapas.
+    </p>
+    <p style="color:#94a3b8;margin-bottom:2rem">
+      Me apasiona resolver problemas complejos, implementar buenas prácticas de
+      desarrollo y adaptarme con rapidez a nuevos retos tecnológicos, siempre
+      buscando soluciones eficientes y escalables.
+    </p>
+    <div class="soft-skills">
+      <span class="skill-pill">Resolución de problemas</span>
+      <span class="skill-pill">Pensamiento lógico</span>
+      <span class="skill-pill">Trabajo en equipo</span>
+      <span class="skill-pill">Comunicación efectiva</span>
+      <span class="skill-pill">Adaptabilidad</span>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="about-card">
+      <div class="about-terminal">
+        <div><span class="t-prompt">~/diego</span> <span class="t-cmd">cat profile.json</span></div>
+        <br/>
+        <div>{</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"Diego Eduardo Velázquez Méndez"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Ingeniero de Software"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"focus"</span>: [</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Backend APIs"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"IoT Systems"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Web developer"</span></div>
+        <div>&nbsp;&nbsp;],</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"San Cristóbal de las Casas, Chis."</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"university"</span>: <span class="t-str">"UP Chiapas — Ing. de Software"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"status"</span>: <span class="t-val">"open_to_work"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"languages"</span>: {</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">"Español"</span>: <span class="t-val">"nativo"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">"English"</span>: <span class="t-val">"básico"</span></div>
+        <div>&nbsp;&nbsp;}</div>
+        <div>}</div>
+        <br/>
+        <div><span class="t-prompt">~/diego</span>&nbsp;<span class="t-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <div class="section-label">// proyectos destacados</div>
+  <h2 class="section-title">Lo que he <span>construido.</span></h2>
+  <p class="section-sub">Proyectos reales con impacto, tecnologías modernas y código limpio.</p>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-number">01 / Proyecto</div>
+      <h3 class="project-title">Velasport</h3>
+      <span class="project-role">Desarrollador Web &amp; Backend</span>
+      <p class="project-desc">
+        Plataforma de e-commerce para la venta de uniformes deportivos. Los usuarios realizan pedidos
+        en línea mientras los administradores gestionan el stock de forma completa y en tiempo real.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express.js</span>
+        <span class="tag">React</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">JWT</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-number">02 / Proyecto</div>
+      <h3 class="project-title">Suchibus</h3>
+      <span class="project-role">Desarrollador Backend</span>
+      <p class="project-desc">
+        API REST para la administración digital de una empresa de transporte de pasajeros,
+        orientada a manejar la logística operativa de forma centralizada y eficiente.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express.js</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">REST API</span>
+        <span class="tag">JWT</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-number">03 / Proyecto</div>
+      <h3 class="project-title">Xilonen — IoT</h3>
+      <span class="project-role">Backend Developer &amp; Diseñador Web</span>
+      <p class="project-desc">
+        Sistema IoT para huertos inteligentes con monitoreo en tiempo real mediante sensores
+        de múltiples indicadores de salud de cultivos. Incluye dashboard de visualización de datos.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Go</span>
+        <span class="tag">IoT / Sensores</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">UI Design</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience">
+  <div class="section-label">// experiencia</div>
+  <h2 class="section-title">Trayectoria <span>profesional.</span></h2>
+  <p class="section-sub">Proyectos y roles donde he aplicado mis habilidades técnicas.</p>
+  <div class="exp-list reveal">
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-company">Velasport</div>
+        <div class="exp-period">Proyecto profesional</div>
+      </div>
+      <div>
+        <span class="exp-role">Desarrollador Web &amp; Backend</span>
+        <p class="exp-desc">
+          Desarrollo full-stack de una tienda en línea para uniformes deportivos.
+          Implementación de sistema de pedidos, gestión de inventario y panel administrativo completo.
+        </p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-company">Suchibus</div>
+        <div class="exp-period">Proyecto profesional</div>
+      </div>
+      <div>
+        <span class="exp-role">Desarrollador Backend</span>
+        <p class="exp-desc">
+          Diseño y desarrollo de una API REST para gestión de logística de transporte de pasajeros,
+          digitalizando los procesos operativos de la empresa.
+        </p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-company">Xilonen</div>
+        <div class="exp-period">Proyecto IoT</div>
+      </div>
+      <div>
+        <span class="exp-role">Backend Developer &amp; Diseñador Web</span>
+        <p class="exp-desc">
+          Desarrollo de APIs para sistema IoT de monitoreo agrícola inteligente.
+          Integración de sensores en tiempo real y diseño de interfaz de usuario
+          para visualización de métricas de salud de cultivos.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <div class="section-label">// habilidades técnicas</div>
+  <h2 class="section-title">Mi <span>arsenal.</span></h2>
+  <p class="section-sub">Tecnologías organizadas por categoría.</p>
+  <div class="skills-grid reveal">
+
+    <div class="skill-category">
+      <div class="category-name">Lenguajes</div>
+      <div class="skill-items">
+        <span class="skill-badge">JavaScript</span>
+        <span class="skill-badge">TypeScript</span>
+        <span class="skill-badge">Python</span>
+        <span class="skill-badge">Go</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="category-name">Backend</div>
+      <div class="skill-items">
+        <span class="skill-badge">Node.js</span>
+        <span class="skill-badge">Express.js</span>
+        <span class="skill-badge">JWT</span>
+        <span class="skill-badge">SQLAlchemy</span>
+        <span class="skill-badge">Bcrypt</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="category-name">Frontend</div>
+      <div class="skill-items">
+        <span class="skill-badge">React + JS</span>
+        <span class="skill-badge">React + TS</span>
+        <span class="skill-badge">Angular</span>
+        <span class="skill-badge">HTML / CSS</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="category-name">Bases de datos</div>
+      <div class="skill-items">
+        <span class="skill-badge">PostgreSQL</span>
+        <span class="skill-badge">MySQL</span>
+        <span class="skill-badge">MongoDB</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="category-name">Herramientas</div>
+      <div class="skill-items">
+        <span class="skill-badge">Git</span>
+        <span class="skill-badge">GitHub</span>
+        <span class="skill-badge">REST APIs</span>
+        <span class="skill-badge">IoT</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="category-name">Seguridad</div>
+      <div class="skill-items">
+        <span class="skill-badge">JWT Auth</span>
+        <span class="skill-badge">Bcrypt</span>
+        <span class="skill-badge">HTTPS</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ BLOG TÉCNICO ══ -->
+<section id="blog">
+  <div class="section-label">// blog técnico</div>
+  <h2 class="section-title">Tutoriales <span>&amp; artículos.</span></h2>
+  <p class="section-sub">Comparto lo que aprendo: tutoriales de AWS, buenas prácticas y arquitectura de software.</p>
+  <div class="blog-grid">
+
+    <!-- Tutorial 1: Aurora RDS MySQL -->
+    <div class="blog-card reveal">
+      <div class="blog-cover blog-cover-01">
+        <span class="blog-cover-icon">🐬</span>
+      </div>
+      <div class="blog-meta-bar">
+        <span class="blog-tag">AWS</span>
+        <span class="blog-tag">Aurora RDS</span>
+        <span class="blog-read-time">⏱ 9 min lectura</span>
+      </div>
+      <div class="blog-body">
+        <h3 class="blog-title">Despliegue de BD MySQL en Amazon Aurora RDS</h3>
+        <p class="blog-excerpt">
+          Aprende a crear un clúster de Amazon Aurora con motor MySQL, configurarlo
+          dentro de una VPC privada y conectarlo de forma segura a tu backend en EC2.
+        </p>
+        <div class="blog-steps">
+          <div class="blog-step">Crear clúster Aurora MySQL desde la consola AWS</div>
+          <div class="blog-step">Configurar VPC, subnets privadas y Security Groups</div>
+          <div class="blog-step">Conectar el clúster desde EC2 vía MySQL client</div>
+          <div class="blog-step">Gestionar credenciales con AWS Secrets Manager</div>
+          <div class="blog-step">Habilitar Multi-AZ y backups automáticos</div>
+        </div>
+        <div class="blog-footer">
+          <span class="blog-author">Diego Velázquez · 2025</span>
+          <a href="https://drive.google.com/file/d/1f2SWGjMNClv_gNsprdWa-bB_z8GWcAs7/view?usp=sharing" class="btn btn-outline">Video tutorial</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial 2: RabbitMQ en EC2 -->
+    <div class="blog-card reveal">
+      <div class="blog-cover blog-cover-02">
+        <span class="blog-cover-icon">🐇</span>
+      </div>
+      <div class="blog-meta-bar">
+        <span class="blog-tag">AWS</span>
+        <span class="blog-tag">EC2</span>
+        <span class="blog-tag">RabbitMQ</span>
+        <span class="blog-read-time">⏱ 11 min lectura</span>
+      </div>
+      <div class="blog-body">
+        <h3 class="blog-title">Despliegue de RabbitMQ en una instancia EC2</h3>
+        <p class="blog-excerpt">
+          Guía práctica para instalar y configurar RabbitMQ en EC2, habilitar la
+          interfaz de administración y conectar productores y consumidores desde tu API.
+        </p>
+        <div class="blog-steps">
+          <div class="blog-step">Lanzar instancia EC2 y abrir puertos 5672 y 15672</div>
+          <div class="blog-step">Instalar Erlang y RabbitMQ en Ubuntu 22.04</div>
+          <div class="blog-step">Habilitar el plugin de Management UI</div>
+          <div class="blog-step">Crear usuarios, vhosts y permisos en RabbitMQ</div>
+          <div class="blog-step">Conectar productores y consumidores desde Node.js / Go</div>
+        </div>
+        <div class="blog-footer">
+          <span class="blog-author">Diego Velázquez · 2025</span>
+          <a href="https://drive.google.com/file/d/1fuPmyHp0fehEfjKrxrKIij-cnEemmbXQ/view?usp=sharing" class="btn btn-outline">Video tutorial</a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial 3: Aurora RDS PostgreSQL -->
+    <div class="blog-card reveal">
+      <div class="blog-cover blog-cover-03">
+        <span class="blog-cover-icon">🐘</span>
+      </div>
+      <div class="blog-meta-bar">
+        <span class="blog-tag">AWS</span>
+        <span class="blog-tag">Aurora RDS</span>
+        <span class="blog-tag">PostgreSQL</span>
+      </div>
+      <div class="blog-body">
+        <h3 class="blog-title">Despliegue de BD PostgreSQL en Amazon Aurora RDS</h3>
+        <p class="blog-excerpt">
+          Cómo crear un clúster Aurora con motor PostgreSQL, conectarlo de forma segura
+          desde EC2, gestionar variables de entorno y ejecutar tus primeras migraciones en producción.
+        </p>
+        <div class="blog-steps">
+          <div class="blog-step">Crear clúster Aurora PostgreSQL desde la consola AWS</div>
+          <div class="blog-step">Configurar Security Group para acceso solo desde EC2</div>
+          <div class="blog-step">Conectar con psql y definir variables de entorno</div>
+          <div class="blog-step">Ejecutar migraciones con GORM o SQLAlchemy</div>
+          <div class="blog-step">Habilitar backups automáticos y monitoreo con CloudWatch</div>
+        </div>
+        <div class="blog-footer">
+          <span class="blog-author">Diego Velázquez · 2025</span>
+            <a href="https://drive.google.com/file/d/1Noitfn75iCPH34EKPQt5uoQOB8vvq2IW/view?usp=drive_link" class="btn btn-outline">Video tutorial</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="section-label" style="text-align:center">// contacto</div>
+    <h2 class="section-title" style="text-align:center">Hablemos <span>juntos.</span></h2>
+    <p style="color:var(--muted);max-width:440px;margin:0 auto .5rem;font-size:.95rem">
+      ¿Tienes un proyecto en mente o quieres conocer más sobre mi trabajo?
+      Estoy disponible para nuevas oportunidades.
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:233304@ids.upchiapas.edu.mx" class="contact-card">
+        <span class="contact-icon">✉️</span>
+        <span>233304@ids.upchiapas.edu.mx</span>
+      </a>
+      <a href="tel:+529671904727" class="contact-card">
+        <span class="contact-icon">📱</span>
+        <span>967 190 47 27</span>
+      </a>
+      <a href="https://github.com/Develazquez" target="_blank" class="contact-card">
+        <span class="contact-icon">🐙</span>
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/diego-eduardo-velázquez-méndez-77b805353" target="_blank" class="contact-card">
+        <span class="contact-icon">💼</span>
+        <span>LinkedIn</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>© 2025 Diego Eduardo Velázquez Méndez</span>
+  <span style="color:var(--accent);font-family:'JetBrains Mono',monospace">built with ❤ &amp; ☕</span>
+  <span>San Cristóbal de las Casas, Chiapas</span>
+</footer>
+
+<script>
+// Scroll reveal
+const revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revealObs.observe(el);
+});
+
+// Stagger tech chips on section enter
+var chipsAnimated = false;
+var chipObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting && !chipsAnimated) {
+      chipsAnimated = true;
+      document.querySelectorAll('.tech-chip').forEach(function(chip, i) {
+        setTimeout(function() {
+          chip.style.opacity = '1';
+          chip.style.transform = 'translateY(0)';
+        }, i * 60);
+      });
+      chipObs.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
+
+// Init chips hidden
+document.querySelectorAll('.tech-chip').forEach(function(chip) {
+  chip.style.opacity = '0';
+  chip.style.transform = 'translateY(16px)';
+  chip.style.transition = 'opacity .4s ease, transform .4s ease, border-color .25s, box-shadow .25s, background .25s';
+});
+
+var stackSection = document.getElementById('stack');
+if (stackSection) { chipObs.observe(stackSection); }
+</script>
+</body>
+</html>
